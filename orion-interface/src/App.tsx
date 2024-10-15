@@ -1,52 +1,47 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import { invoke } from "@tauri-apps/api/tauri";
 import "./App.css";
+import ExtensionList from "./components/extensions_listing";
 
 function App() {
-  const [greetMsg, setGreetMsg] = useState("");
   const [name, setName] = useState("");
+  const lastVer = "1.0.0"; // Define the lastVer variable
 
-  async function greet() {
-    // Learn more about Tauri commands at https://tauri.app/v1/guides/features/command
-    setGreetMsg(await invoke("greet", { name }));
-  }
 
   return (
     <div className="container">
-      <h1>Welcome to Tauri!</h1>
-
-      <div className="row">
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo vite" alt="Vite logo" />
-        </a>
-        <a href="https://tauri.app" target="_blank">
-          <img src="/tauri.svg" className="logo tauri" alt="Tauri logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+      <div className="header orion">
+        <div>Orion</div>
+        <div className="row">Last Update <p className="lastVersion">{lastVer}</p></div>
       </div>
+      
+      <div className="container" style={{ display: 'flex', flexDirection: 'row' }}>
+        <div className="settings-sidebar" style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+          <ul>
+            <li>Plataformas</li>
+            <li>Integrações</li>
+            <li>Funcionalidades</li>
+            <li>Geral</li>
+            <li>Interface</li>
+            <li>Notificações</li>
+            <li>Jogos GOG.com</li>
+            <li>Instalando, Atualizando</li>
+            <li>Recursos de Jogos</li>
+          </ul>
+        </div>
 
-      <p>Click on the Tauri, Vite, and React logos to learn more.</p>
 
-      <form
-        className="row"
-        onSubmit={(e) => {
-          e.preventDefault();
-          greet();
-        }}
-      >
-        <input
-          id="greet-input"
-          onChange={(e) => setName(e.currentTarget.value)}
-          placeholder="Enter a name..."
-        />
-        <button type="submit">Greet</button>
-      </form>
+        <div className="right_container" style={{ flex: 1 }}>
+          <div>
+            <div>
+              <ExtensionList />
+            </div>
+          </div>
+        </div>
 
-      <p>{greetMsg}</p>
+
+      </div>
     </div>
+
   );
 }
 
