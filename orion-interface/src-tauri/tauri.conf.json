@@ -6,7 +6,7 @@
     "distDir": "../dist"
   },
   "package": {
-    "productName": "orion-interface",
+    "productName": "Orion",
     "version": "0.1.0"
   },
   "tauri": {
@@ -19,7 +19,7 @@
     },
     "windows": [
       {
-        "title": "orion-interface",
+        "title": "Orion",
         "width": 800,
         "height": 600
       }
@@ -30,7 +30,7 @@
     "bundle": {
       "active": true,
       "targets": "all",
-      "identifier": "com.orion-interface.app",
+      "identifier": "com.orion.app",
       "icon": [
         "icons/32x32.png",
         "icons/128x128.png",

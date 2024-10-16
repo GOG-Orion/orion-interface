@@ -1,47 +1,25 @@
-import { useState } from "react";
 import "./App.css";
-import ExtensionList from "./components/extensions_listing";
+import IntegrationsHeader from "./components/integrations_header";
+import IntegrationsList from "./components/integrations_listing";
+import SettingsSidebar from "./components/settings_sidebar";
 
 function App() {
-  const [name, setName] = useState("");
-  const lastVer = "1.0.0"; // Define the lastVer variable
-
 
   return (
-    <div className="container">
-      <div className="header orion">
-        <div>Orion</div>
-        <div className="row">Last Update <p className="lastVersion">{lastVer}</p></div>
-      </div>
-      
-      <div className="container" style={{ display: 'flex', flexDirection: 'row' }}>
-        <div className="settings-sidebar" style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-          <ul>
-            <li>Plataformas</li>
-            <li>Integrações</li>
-            <li>Funcionalidades</li>
-            <li>Geral</li>
-            <li>Interface</li>
-            <li>Notificações</li>
-            <li>Jogos GOG.com</li>
-            <li>Instalando, Atualizando</li>
-            <li>Recursos de Jogos</li>
-          </ul>
-        </div>
-
-
-        <div className="right_container" style={{ flex: 1 }}>
-          <div>
-            <div>
-              <ExtensionList />
+    <div className="orionHeader">
+      <h1>Orion</h1>
+      <div className="settings-container" style={{ display: 'flex', flexDirection: 'row' }}>
+          <div className="settings-content">
+            <SettingsSidebar />
+            <div className="integrations_main" style={{ flex: 1 }}>
+              <IntegrationsHeader />
+              <div>
+                <IntegrationsList />
+              </div>
             </div>
           </div>
-        </div>
-
-
       </div>
     </div>
-
   );
 }
 
