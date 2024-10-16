@@ -1,0 +1,21 @@
+# 0.0.2 - 10/16/2024
+### App Changes
+- Renamed "extension(s)" files, to "integration(s)".
+- Added button effects & main color pattern on `App.css` as `.integration-item button`
+
+### Notes
+- No actual installation has been added, since i rather implement a verification for each integration that is added, before making it available. But i decided to publish the interface done so far, to show that the project is not abandoned/deprecated.
+
+# 0.0.1 - 10/15/2024
+### App Changes
+- Added a component for the extensions pattern `extension_pattern.tsx`
+- Added a component for the extensions list display `extensions_listing.tsx`
+- Addeed a list with all the available/to be available extensions `extensions.json`
+- Added a component for the sidebar settings `settings_sidebar.tsx`
+
+
+### Repo Updates
+- Added CONTRIBUTING file
+- Added CHANGELOG file
+- Updated README.md file
+- Added a couple of Extension Logos (Still needs to be adjusted for fixed sizes)
