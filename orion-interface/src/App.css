@@ -1,0 +1,210 @@
+:root {
+  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
+
+  color: #0f0f0f;
+  background-color: #f6f6f6;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+.orionHeader {
+  display: flex;
+  flex-direction: column;
+  background-color: #333;
+}
+
+h1 {
+  text-align: center;
+}
+
+.orion.version {
+  color: #7B7B7D;
+  text-align: center;
+  align-items: center;
+  font-weight: 100;
+}
+
+.container {
+  margin: 0;
+  padding-top: 10vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.lastVersion {
+  margin: 0;
+  margin-left: 1vh;
+  font-size: 0.8em;
+  color: #119965;
+}
+
+input,
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  color: #0f0f0f;
+  background-color: #ffffff;
+  transition: border-color 0.25s;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+#greet-input {
+  margin-right: 5px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: #f6f6f6;
+    background-color: #2f2f2f;
+  }
+
+  a:hover {
+    color: #24c8db;
+  }
+
+  input,
+  button {
+    color: #ffffff;
+    background-color: #0f0f0f98;
+  }
+  button:active {
+    background-color: #0f0f0f69;
+  }
+}
+
+.settings-container {
+  font-family: Arial, sans-serif;
+  padding: 0px 15px 15px 15px;
+}
+
+.settings-content {
+  display: flex;
+  justify-content: space-between;
+}
+
+.settings-sidebar {
+  width: 200px;
+  color: white;
+  padding: 20px;
+  background-color: #2C2B2E;
+}
+
+.settings-sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  padding-left: 5px;
+  margin-top: 0px;
+}
+
+.settings-sidebar li {
+  margin-bottom: 10px;
+  cursor: pointer;
+}
+
+.settings-sidebar li:hover {
+  -webkit-filter: brightness(1.15);
+  filter: brightness(1.15)
+}
+
+.settings-sidebar h3 {
+  border: 0px;
+  padding: 0px;
+  margin: 0px;
+}
+
+.integrations-main {
+  flex-grow: 1;
+  padding: 20px;
+  background-color: #2C2B2E;
+  margin-left: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.integrations-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: max-content;
+  padding-right: 10px;
+}
+
+.integrations_header span {
+  border-right: 5px;
+}
+
+.integration-section {
+  margin-top: 20px;
+}
+
+.integration-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid #333;
+  background-color: #2C2B2E;
+  max-height: 2vh;
+  min-width: max-content;
+}
+
+.logo {
+  height: 2em;
+  will-change: filter;
+  transition: 0.75s;
+  min-width: max-content;
+  min-height: max-content;
+  image-rendering: auto;
+  padding: 5px 10px;
+}
+
+.extProps {
+  display: flex;
+  align-items: center;
+  text-align: left;
+}
+
+.extProps.Name {
+  color: white;
+  padding-left: 20px;
+  padding-right: 5px;
+}
+
+.extProps.Ver {
+  text-align: right;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+
+.integration-item button {
+  background-color: #a27fcf;
+  color: white;
+  border: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-left: 5px;
+}
+
+.integration-item button:hover {
+  -webkit-filter: brightness(1.15);
+  filter: brightness(1.15)
+}
+
+.integration-item button:active {
+  -webkit-filter: brightness(0.85);
+  filter: brightness(0.85)
+}

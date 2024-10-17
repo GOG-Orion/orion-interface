@@ -1,0 +1,9 @@
+### For testing use
+`npm run tauri dev`
+
+You will be able to see the app running on your browser and a local instance of the executable.
+
+**Note**: I use npm, feel free to use the package manager of your choice.
+
+
+<a target="_blank" href="https://icons8.com">Icons</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>
