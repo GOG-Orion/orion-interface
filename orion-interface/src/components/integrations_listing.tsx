@@ -1,7 +1,12 @@
 import integrationsList from './integrations.json';
 import { IntegrationsPattern } from './integrations_pattern';
 
-function IntegrationsList() {
+interface IntegrationsListProps {
+    updateSelectedCount: (delta: number) => void;
+  }
+
+function IntegrationsList({ updateSelectedCount }: IntegrationsListProps) {
+
     return (
         <div>
             {integrationsList.map((integration, index) => (
@@ -17,6 +22,7 @@ function IntegrationsList() {
                     }}
                     name={integration.name}
                     integrationImage={integration.image}
+                    updateSelectedCount={updateSelectedCount}
                 />
             ))}
         </div>

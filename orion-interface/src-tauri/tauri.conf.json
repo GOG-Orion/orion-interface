@@ -11,6 +11,10 @@
   },
   "tauri": {
     "allowlist": {
+      "dialog":{
+        "confirm": true,
+        "message":true
+      },
       "all": false,
       "shell": {
         "all": false,

@@ -1,3 +1,22 @@
+# 0.0.3 - 10/30/2024
+- Add confirmation pop up box "Verification Started".
+    - Maybe change later, for a "confirmation state", with button change.
+- Add packages for `{confirm, message}`, imports in `Cargo.lock`, `Cargo.toml` & `tauri.conf.json`.
+- Add 'rem' patterns to `App.css`.
+    - Change 'pixels' sizes to 'rems'.
+- Add `useState` to `App.tsx`
+    - Add consts `selectedCount`, `setSelectedCount` & `updateSelectedCount`.
+- Rename `settings-container` to `container_settings` in `App.tsx`.
+- Rename `integrations_main` to `container_integrations` in `App.tsx`.
+- Rename `integrationsSelected` to `selectedCount` in `integrations_header.tsx`.
+- Add `IntegrationsListProps` interface & `updateSelectedCount` in `integrations_listing.tsx`.
+- Add `invoke`, `confirm` & `message` imports & `updateSelectedCount` in `integrations_pattern.tsx`.
+- Remove  `isDisabled`, `onEnableAction` & `onDisableAction` from `integrations_pattern.tsx`.
+- Fix `handleCheckboxChange`, `handleVerifyClick` & return class names in `integrations_pattern.tsx`.
+- Remove `Interface` option from list in `settings_sidebar.tsx`.
+
+### Started implementation of repos verification for new version & actuall integration download.
+
 # 0.0.2 - 10/16/2024
 ### App Changes
 - Renamed "extension(s)" files, to "integration(s)".

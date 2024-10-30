@@ -1,7 +1,11 @@
+## This is a community project, don't feel intimidated to contribute, if you want to. We are always learning and making mistakes, thats why we're here for!
+
+### Take a look at the "Projects" tab, and see whats up in the planner.
+
 ### For testing use
 `npm run tauri dev`
 
-You will be able to see the app running on your browser and a local instance of the executable.
+*You will be able to see the app running on your browser and a local instance of the executable. **Note**: I use npm, feel free to use the package manager of your choice.*
 
 **Note**: I use npm, feel free to use the package manager of your choice.
 

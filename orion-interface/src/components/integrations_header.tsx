@@ -1,16 +1,11 @@
-import IntegrationsList from "./integrations_listing";
-
 interface IntegrationsHeaderProps {
-    integrationsSelected:boolean;
-
+    selectedCount: number;
 }
 
-export function IntegrationsHeader({integrationsSelected}: IntegrationsHeaderProps) {
-    
-    
+export function IntegrationsHeader({selectedCount}:IntegrationsHeaderProps) {
     return (
         <div className="integrations_header">
-            <span>Selected {integrationsSelected}</span>
+            <span>Selected {selectedCount}</span>
             <span>Integration</span>
             <span>Version</span>
             <span>Action</span>

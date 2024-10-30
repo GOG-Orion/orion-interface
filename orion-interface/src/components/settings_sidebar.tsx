@@ -15,12 +15,11 @@ export function SettingsSidebar({}: SettingsSidebarProps) {
 
 
     return (
-    <div className="settings-sidebar" style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
+    <div className="settings-sidebar">
         <h3>General</h3>
         <ul>
             <li>Integrations</li>
             <li>Functionalities</li>
-            <li>Interface</li>
             <li>Notifications</li>
             <li>Contributors</li>
         </ul>
