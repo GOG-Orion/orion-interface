@@ -14,3 +14,5 @@ src-tauri it's the backend
 
 src
     main -> entry point
+
+    https://www.youtube.com/watch?v=-X8evddpu7M

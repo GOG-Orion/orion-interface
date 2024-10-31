@@ -1,0 +1,4 @@
+{
+    "editor.defaultColorDecorators": true,
+    "css.lint.duplicateProperties": "warning"
+}

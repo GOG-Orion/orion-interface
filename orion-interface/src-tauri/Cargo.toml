@@ -1,6 +1,6 @@
 [package]
 name = "Orion"
-version = "0.0.2"
+version = "0.0.4"
 description = "A integrations download client, for the GOG Galaxy App."
 authors = ["Vitor (v-Kaleb) Guttler"]
 edition = "2021"
@@ -11,9 +11,10 @@ edition = "2021"
 tauri-build = { version = "1", features = [] }
 
 [dependencies]
-tauri = { version = "1", features = [ "dialog-confirm", "dialog-message", "shell-open"] }
+tauri = { version = "1", features = [ "http-request", "dialog-confirm", "dialog-message", "shell-open"] }
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
+reqwest = { version = "0.11", features = ["blocking", "json"] }
 
 [features]
 # This feature is used for production builds or when a dev server is not specified, DO NOT REMOVE!!
