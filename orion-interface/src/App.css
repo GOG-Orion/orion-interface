@@ -102,7 +102,7 @@ button {
   grid-template-columns: minmax(200px, 1fr) auto;
   grid-gap: var(--10px);
   font-family: Arial, sans-serif;
-  padding: 0rem var(--10px) var(--10px) var(--10px);
+  padding: var(--10px);
   box-shadow: 0rem 0rem var(--10px) rgba(0, 0, 0, 0.1);
 }
 
