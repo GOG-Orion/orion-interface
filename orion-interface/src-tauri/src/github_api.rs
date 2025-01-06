@@ -4,7 +4,7 @@ use serde::Deserialize;
 
 // Estrutura para deserializar o conteúdo do repositório
 #[derive(Deserialize)]
-struct RepoContent {
+pub struct RepoContent {
     name: String,
     path: String,
     download_url: Option<String>,
@@ -12,14 +12,19 @@ struct RepoContent {
     content_type: String,
 }
 
-/// Busca o `download_url` usando a API do GitHub
+/// Modificar a função resolve_download_url para acessar os assets de releases
 pub fn resolve_download_url(integration_name: &str) -> Result<String, String> {
-    let client = Client::new();
+    let client = reqwest::blocking::Client::new();
+    let release_url = format!(
+        "https://api.github.com/repos/{}/releases/latest", 
+        integration_name
+    );
+
     let response = client
-        .get(GITHUB_API_BASE)
-        .header("User-Agent", "Rust-Integration-App") // Cabeçalho obrigatório para a API do GitHub
+        .get(&release_url)
+        .header("User-Agent", "Rust-Integration-App") // User-Agent é obrigatório
         .send()
-        .map_err(|e| format!("Failed to fetch GitHub repositories: {}", e))?;
+        .map_err(|e| format!("Failed to fetch GitHub release: {}", e))?;
 
     if !response.status().is_success() {
         return Err(format!(
@@ -28,9 +33,9 @@ pub fn resolve_download_url(integration_name: &str) -> Result<String, String> {
         ));
     }
 
-    let repos: Vec<serde_json::Value> = response
+    let release: serde_json::Value = response
         .json()
-        .map_err(|e| format!("Failed to parse GitHub API response: {}", e))?;
+        .map_err(|e| format!("Failed to parse GitHub release response: {}", e))?;
 
     // Encontra o repositório correspondente ao nome da integração
     let repo = repos
@@ -41,44 +46,38 @@ pub fn resolve_download_url(integration_name: &str) -> Result<String, String> {
                 .map_or(false, |repo_name| repo_name.contains(integration_name.to_lowercase().as_str()))
         })
         .ok_or_else(|| format!("No repository found for integration: {}", integration_name))?;
+    // Busca o primeiro asset da release
+    let asset = release["assets"]
+        .as_array()
+        .and_then(|assets| assets.first())
+        .ok_or_else(|| "No assets found in the release.".to_string())?;
 
-    // Monta a URL do repositório
-    let html_url = repo["html_url"]
+    let download_url = asset["browser_download_url"]
         .as_str()
         .ok_or_else(|| "Repository does not contain a valid URL.".to_string())?;
 
-    Ok(html_url.to_string())
+    Ok(download_url.to_string())
 }
 
-pub fn fetch_repo_contents(owner: &str, repo: &str, path: &str, token: &str) -> Result<Vec<RepoContent>, String> {
+
+pub fn fetch_repo_contents(owner: &str, repo: &str, path: &str) -> Result<Vec<RepoContent>, String> {
     let url = format!("https://api.github.com/repos/{}/{}/contents/{}", owner, repo, path);
-    let client = Client::new();
+
+    let client = reqwest::blocking::Client::new();
     let response = client
         .get(&url)
-        .header("Authorization", format!("Bearer {}", token))
         .header("User-Agent", "RustApp")
         .send()
-        .map_err(|e| e.to_string())?;
+        .map_err(|e| format!("Failed to fetch contents: {}", e))?;
 
     if response.status().is_success() {
-        let contents: Vec<RepoContent> = response.json().map_err(|e| e.to_string())?;
+        let contents: Vec<RepoContent> = response.json().map_err(|e| format!("Failed to parse response: {}", e))?;
         Ok(contents)
     } else {
         Err(format!(
-            "Failed to fetch contents: {}",
+            "Failed to fetch contents. Status: {}",
             response.status()
         ))
     }
 }
 
-fn main() {
-    let token = "YOUR_PERSONAL_ACCESS_TOKEN";
-    match fetch_repo_contents("GOG-Orion", "galaxy-integration-steam", "", token) {
-        Ok(contents) => {
-            for content in contents {
-                println!("Name: {}, URL: {:?}", content.name, content.download_url);
-            }
-        }
-        Err(e) => eprintln!("Error: {}", e),
-    }
-}
