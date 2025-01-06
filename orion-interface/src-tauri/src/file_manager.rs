@@ -1,8 +1,11 @@
-
-use crate::{Path, Command, System, integrations};
-use reqwest::blocking;
+use sysinfo::{System, SystemExt};
 use std::fs;
-use std::fs::copy;
+use std::io::copy;
+use std::fs::File;
+use std::path::Path;
+use std::process::Command;
+use crate::github_api::resolve_download_url;  // ou o módulo onde a função está
+use reqwest::blocking::get; // Importa a função de requisição bloqueante
 
 
 const DOWNLOAD_DIR: &str = "./downloads"; // Diretório temporário de downloads
@@ -21,8 +24,8 @@ pub fn download_file(integration_name: &str) -> Result<String, String> {
         return Err("The Galaxy Client is currently running. Please close it before proceeding.".to_string());
     }
 
-    // Resolve o URL de download usando a API do GitHub
-    let download_url = integrations.resolve_download_url(integration_name)?;
+    // Resolve o URL de download usando a API do GitHub (agora pega do release)
+    let download_url = resolve_download_url(integration_name)?;
 
     // Caminho para o arquivo temporário
     let dest_path = format!("{}/{}.zip", DOWNLOAD_DIR, integration_name);
@@ -30,15 +33,15 @@ pub fn download_file(integration_name: &str) -> Result<String, String> {
     // Criar diretório de downloads, se necessário
     fs::create_dir_all(DOWNLOAD_DIR).map_err(|e| e.to_string())?;
 
-    // Baixar o arquivo zip
-    let response = blocking::get(&download_url).map_err(|e| e.to_string())?;
+    // Baixar o arquivo zip com reqwest
+    let response = get(&download_url).map_err(|e| e.to_string())?; // Aqui está o download
+    let bytes = response.bytes().map_err(|e| e.to_string())?;
     let mut dest_file = File::create(Path::new(&dest_path)).map_err(|e| e.to_string())?;
-    copy(&mut response.bytes().map_err(|e| e.to_string())?.as_ref(), &mut dest_file)
-        .map_err(|e| e.to_string())?;
+    copy(&mut &bytes[..], &mut dest_file).map_err(|e| e.to_string())?;
 
     // Extrair o arquivo zip usando PowerShell no Windows
     Command::new("powershell")
-        .args([
+        .args([ 
             "-Command",
             &format!(
                 "Expand-Archive -Path {} -DestinationPath {}/galaxy-integration-steam",
