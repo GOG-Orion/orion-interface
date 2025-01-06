@@ -6,8 +6,8 @@ interface IntegrationsPatternProps {
     isEnabled: boolean;
     name: string;
     integrationImage: string;
-    currentVersion: string; // This can be an empty string or undefined
-    latestVersion: string;  // This can be an empty string or undefined
+    currentVersion?: string;
+    latestVersion?: string;
     updateSelectedCount: (delta: number) => void;
 }
 
@@ -16,8 +16,6 @@ export function IntegrationsPattern({
     updateSelectedCount,
     name,
     integrationImage,
-    currentVersion,
-    latestVersion 
 }: IntegrationsPatternProps) {
     const [extensionName] = useState(name);
     const [isChecked, setIsChecked] = useState(false);
@@ -31,6 +29,7 @@ export function IntegrationsPattern({
 
     const handleVerifyClick = async () => {
         console.log("Verification button clicked"); // Debugging log
+        console.log("Starting verification...");
         const confirmation = await confirm("Do you want to start verification?", "Verification Started");
         console.log("Confirmation response:", confirmation); // Debugging log
         if (confirmation) {
@@ -55,6 +54,29 @@ export function IntegrationsPattern({
                 setIsVerifying(false); // Enables button
                 setButtonText("Verify"); // Reset button text after verification
             }
+        console.log("Confirmation received:", confirmation);
+      
+        if (!confirmation) return;
+      
+        setIsVerifying(true);
+        setButtonText("Verifying...");
+      
+        try {
+          const result = await invoke("verify_latest_version", { integration_name: name });
+          console.log("Download result:", result);
+      
+          if (currentVersion !== latestVersion) {
+            setButtonText("Download");
+            await message("New version available! Click 'Download' to install.", { title: "Info" });
+          } else {
+            await message("Latest version installed.", { title: "Info", type: "error" });
+          }
+        } catch (error) {
+          console.error("Error during verification:", error);
+          await message("Verification failed: " + error.message, { title: "Error", type: "error" });
+        } finally {
+          setIsVerifying(false);
+          setButtonText("Verify");
         }
     };
 
@@ -71,11 +93,27 @@ export function IntegrationsPattern({
             <span className="integration-item Props">
                 <input type="checkbox" checked={isChecked} onChange={handleCheckboxChange} />
                 <img className="integration-item Logo" src={integrationImagePath} alt="Extension logo" />
+                <input
+                    id={`checkbox-${name}`} // Atributo id único
+                    type="checkbox"
+                    checked={isChecked}
+                    onChange={handleCheckboxChange}
+                />
+                <img
+                    className="integration-item Logo"
+                    src={integrationImagePath}
+                    alt={`${name} logo`} 
+                />
                 <span className="integration-item Name">{extensionName}</span>
             </span>
             <span className="integration-item Props">
                 <span className="integration-item Ver">{formatVersion(latestVersion)}</span> {/* Format version display */}
                 <button onClick={handleVerifyClick} disabled={isVerifying || !isEnabled}>
+                <span className="integration-item Ver">{latestVersion?.trim() || "-"}</span> {/* Format version display */}
+                <button
+                    onClick={handleVerifyClick}
+                    disabled={isVerifying || !isEnabled || !isChecked}
+                    aria-label={`${buttonText} ${name}`}>
                     {buttonText}
                 </button>
             </span>
