@@ -7,6 +7,12 @@
 
 *You will be able to see the app running on your browser and a local instance of the executable. **Note**: I use npm, feel free to use the package manager of your choice.*
 
+### Every function that is called from main ***MUST*** be marked as "#[tauri::command]"
+
+*Example:*
+
+#[tauri::command]
+pub fn fetch_repo_contents() {};
 
 #### References:
 * https://github.com/FriendsOfGalaxy

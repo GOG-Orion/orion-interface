@@ -7,7 +7,7 @@ mod integrations;
 
 use github_api::{fetch_repo_contents, resolve_download_url};
 use file_manager::{is_process_running, download_file};
-use integrations::verify_latest_version;
+use integrations::{verify_latest_version};
 
 
 use std::fs;

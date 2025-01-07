@@ -38,7 +38,7 @@ pub fn resolve_download_url(integration_name: &str) -> Result<String, String> {
         .map_err(|e| format!("Failed to parse GitHub release response: {}", e))?;
 
     // Encontra o repositório correspondente ao nome da integração
-    let repo = repos
+    /*let repo = repos
         .iter()
         .find(|repo| {
             repo["name"]
@@ -46,7 +46,7 @@ pub fn resolve_download_url(integration_name: &str) -> Result<String, String> {
                 .map_or(false, |repo_name| repo_name.contains(integration_name.to_lowercase().as_str()))
         })
         .ok_or_else(|| format!("No repository found for integration: {}", integration_name))?;
-    // Busca o primeiro asset da release
+    */// Busca o primeiro asset da release
     let asset = release["assets"]
         .as_array()
         .and_then(|assets| assets.first())

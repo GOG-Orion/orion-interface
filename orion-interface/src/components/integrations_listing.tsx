@@ -1,19 +1,14 @@
 import integrationsList from './integrations.json';
 import { IntegrationsPattern } from './integrations_pattern';
 
-interface IntegrationsListProps {
-    updateSelectedCount: (delta: number) => void;
-  }
 
-function IntegrationsList({ updateSelectedCount }: IntegrationsListProps) {
+function IntegrationsList() {
 
     return (
         <div>
             {integrationsList.map((integration, index) => (
                 <IntegrationsPattern
                     key={index}
-                    isEnabled={false}
-                    isDisabled={false}
                     onEnableAction={() => {
                         // Implement install func call logic
                     }}
@@ -22,7 +17,6 @@ function IntegrationsList({ updateSelectedCount }: IntegrationsListProps) {
                     }}
                     name={integration.name}
                     integrationImage={integration.image}
-                    updateSelectedCount={updateSelectedCount}
                 />
             ))}
         </div>

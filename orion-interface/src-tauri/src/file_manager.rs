@@ -8,7 +8,7 @@ use crate::github_api::resolve_download_url;  // ou o módulo onde a função es
 use reqwest::blocking::get; // Importa a função de requisição bloqueante
 
 
-const DOWNLOAD_DIR: &str = "./downloads"; // Diretório temporário de downloads
+pub const DOWNLOAD_DIR: &str = "./downloads"; // Diretório temporário de downloads
 
 /// Verifica se o processo está em execução
 pub fn is_process_running(process_name: &str) -> bool {

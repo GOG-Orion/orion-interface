@@ -1,13 +1,10 @@
-interface IntegrationsHeaderProps {
-    selectedCount: number;
-}
 
-export function IntegrationsHeader({selectedCount}:IntegrationsHeaderProps) {
+export function IntegrationsHeader() {
     return (
         <div className="integrations_header">
-            <span>Selected {selectedCount}</span>
-            <span>Integration</span>
+            <span>Integrations</span>
             <span>Version</span>
+            <span>Update</span>
             <span>Action</span>
         </div>
     );

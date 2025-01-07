@@ -8,6 +8,8 @@
   --16px: 1rem;
   --24px: 1.5rem;
   --32px: 2rem;
+  --40px: 2.5rem;
+  --48px: 3rem;
   --100px: 6.25rem;
   --120px: 7.5rem;
   --200px: 12.5rem;
@@ -200,6 +202,7 @@ button {
   min-width: -webkit-max-content;
   min-width: -moz-max-content;
   min-width: max-content;
+  min-width: var(--48px);
   min-height: -webkit-max-content;
   min-height: -moz-max-content;
   min-height: max-content;
