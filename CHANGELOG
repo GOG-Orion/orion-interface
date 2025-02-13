@@ -1,6 +1,7 @@
 # 0.0.5 - 12/02/2025
 - Fixed fonts not being applied. Added them to `index.html`.
-
+- Updated packages `npm update`.
+[added 3 packages, removed 11 packages, changed 66 packages, and audited 73 packages in 24s]
 
 
 # 0.0.4 - 07/01/2025
@@ -10,7 +11,6 @@
 - Fix `integrations_listing.tsx` & `integrations_pattern.tsx`
     Removed checkboxes & 'Verify' buttons are working again.
 - Add temp "Orion Planet" icon.
-
 
 
 # 0.0.3 - 10/30/2024
@@ -39,6 +39,7 @@
 
 ### Notes
 - No actual installation has been added, since i rather implement a verification for each integration that is added, before making it available. But i decided to publish the interface done so far, to show that the project is not abandoned/deprecated.
+
 
 # 0.0.1 - 10/15/2024
 ### App Changes
