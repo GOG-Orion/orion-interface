@@ -1,3 +1,8 @@
+# 0.0.5 - 12/02/2025
+- Fixed fonts not being applied. Added them to `index.html`.
+
+
+
 # 0.0.4 - 07/01/2025
 - Remove checkboxes
     Simplified installation and update verification & notification.
