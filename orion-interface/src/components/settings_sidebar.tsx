@@ -5,7 +5,6 @@ interface SettingsSidebarProps {
 }
 
 
-
 export function SettingsSidebar({}: SettingsSidebarProps) {
     const [] = useState();
 
@@ -28,8 +27,8 @@ export function SettingsSidebar({}: SettingsSidebarProps) {
         </ul>
         <div className="orion version" title="Orion Version">
             <div>
-            <span>0.0.2 </span>
-            <span>- Alpha</span>
+            <span>0.0.5</span>
+            <span> - Alpha</span>
             </div>
         </div>
     </div>

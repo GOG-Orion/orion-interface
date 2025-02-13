@@ -1,11 +1,12 @@
 :root {
-  font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Inter, Lexend, Avenir, Helvetica, Arial, sans-serif;
   font-size: var(--16px);
   line-height: var(--24px);
   font-weight: 400;
   --8px: 0.5rem;
   --10px: 0.625rem;
   --16px: 1rem;
+  --20px: 1.25rem;
   --24px: 1.5rem;
   --32px: 2rem;
   --40px: 2.5rem;
@@ -19,7 +20,7 @@
   --480px: 30rem;
 
   color: #0f0f0f;
-  background-color: #f6f6f6;
+  background-color: #333;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -27,6 +28,7 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+
 
 .orionHeader {
   display: flex;
@@ -43,6 +45,8 @@ h1 {
   text-align: center;
   align-items: center;
   font-weight: 100;
+  font-family: 'Inter', sans-serif;
+  font-size: var(--16px);
 }
 
 .container {
@@ -99,18 +103,17 @@ button {
   }
 }
 
-.container_settings {
+/*.container_settings {
   display: grid;
   grid-template-columns: minmax(200px, 1fr) auto;
   grid-gap: var(--10px);
   font-family: Arial, sans-serif;
   padding: var(--10px);
   box-shadow: 0rem 0rem var(--10px) rgba(0, 0, 0, 0.1);
-}
+}*/
 
 .settings-content {
   display: flex;
-  justify-content: space-between;
 }
 
 .settings-sidebar {
@@ -118,7 +121,7 @@ button {
   flex-direction: column;
   flex: 1;
   //width: 200px;
-  color: white;
+  color: #7B7B7D;
   padding: var(--24px);
   background-color: #2C2B2E;
   min-width: var(--120px);
@@ -161,19 +164,18 @@ button {
 
 .integrations_header {
   display: flex;
-  justify-content: space-around;
-  align-items: stretch;
+  justify-content: space-between;
   min-width: -webkit-max-content;
   min-width: -moz-max-content;
   min-width: max-content;
-  padding: var(--10px) var(--8px);
-  border: var(--8px);
+  padding: var(--10px) var(--20px);
 }
 
+/* Line under the header
 .integrations_header span {
   padding: 0rem var(--8px);
   border-bottom: 2px solid #333;
-}
+}*/
 
 .integration-item {
   display: flex;

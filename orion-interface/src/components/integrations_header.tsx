@@ -1,13 +1,11 @@
 
-export function IntegrationsHeader() {
+export function IntegrationsContainerHeader() {
     return (
         <div className="integrations_header">
             <span>Integrations</span>
-            <span>Version</span>
-            <span>Update</span>
-            <span>Action</span>
+            <span>Search</span>
         </div>
     );
 }
 
-export default IntegrationsHeader;
+export default IntegrationsContainerHeader;
