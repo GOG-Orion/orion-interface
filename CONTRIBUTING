@@ -1,9 +1,30 @@
+## This is a community project, don't feel intimidated to contribute, if you want to. We are always learning and making mistakes, thats why we're here for!
+
+### Take a look at the "Projects" tab, and see whats up in the planner.
+
+### For translations, take a look at `languages.json`!
+
 ### For testing use
 `npm run tauri dev`
 
-You will be able to see the app running on your browser and a local instance of the executable.
+*You will be able to see the app running on your browser and a local instance of the executable. **Note**: I use npm, feel free to use the package manager of your choice.*
 
-**Note**: I use npm, feel free to use the package manager of your choice.
+### Every function that is called from main ***MUST*** be marked as "#[tauri::command]"
+
+*Example:*
+
+#[tauri::command]
+pub fn fetch_repo_contents() {};
+
+#### References:
+* https://github.com/FriendsOfGalaxy
+    - https://github.com/FriendsOfGalaxy/update-test-integration
+    - https://github.com/FriendsOfGalaxy/galaxy-integration-uplay/compare/master...fl4shback:galaxy-integration-uplay:master
+* https://github.com/fl4shback
+    https://github.com/fl4shback/galaxy-integration-uplay
+* https://www.gnu.org/licenses/agpl-3.0.en.html
+* https://docsopensource.github.io/docs/License/7.3_BSD_3_Clause
+* https://osssoftware.org/blog/open-source-licenses-explained-a-comparison/
 
 
 <a target="_blank" href="https://icons8.com">Icons</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a>

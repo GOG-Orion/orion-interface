@@ -1,23 +1,17 @@
 import "./App.css";
-import IntegrationsHeader from "./components/integrations_header";
-import IntegrationsList from "./components/integrations_listing";
-import SettingsSidebar from "./components/settings_sidebar";
+import SettingsSidebar from "./components/MenuSidebar";
 
 function App() {
 
   return (
-    <div className="orionHeader">
+    <div>
+      <div className="orionHeader">
       <h1>Orion</h1>
-      <div className="settings-container" style={{ display: 'flex', flexDirection: 'row' }}>
-          <div className="settings-content">
-            <SettingsSidebar />
-            <div className="integrations_main" style={{ flex: 1 }}>
-              <IntegrationsHeader />
-              <div>
-                <IntegrationsList />
-              </div>
-            </div>
-          </div>
+      </div>
+      <div>
+        <div> {/* This is the main container for the settings page */}
+          <SettingsSidebar />
+        </div>
       </div>
     </div>
   );

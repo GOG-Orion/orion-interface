@@ -1,3 +1,57 @@
+# 0.0.6 - 14/02/2025
+- Update `settings_sidebar.tsx` to render component tabs, in a single file, instead of separate component files grouped.
+- Add separate folders for tabs component.
+- Add `LanguageContext` as a better way to propagate languages, than prop drilling. May add libs later for this, but thats not the focus rn.
+- Add Integrations image. Source: https://www.svgrepo.com/svg/436798/link-circle-fill [64px]
+- Add Configuration gear image.* Source: https://icon-sets.iconify.design/mdi/gear/ [48px]
+- Add Source Code github image. Source: https://icon-sets.iconify.design/octicon/mark-github-24/ [48px]
+- Add Contributors group image. Source: https://icon-sets.iconify.design/flowbite/users-group-solid/ [48px]
+- Add `Active` selection forthe menu & selection line to replicacte GOGs' configs menu.
+- Add minimum window size in `tauri.conf.json`. [Next goal, is to make it frameless and add a personalized `title bar`]
+- Priority for next version, is to implement the installation proccess & necessary repos to Orion repo. Also, to clean the css stylesheet.
+
+
+**Considering to change for:*
+<details>
+a) https://icon-sets.iconify.design/pepicons-pencil/gear-circle-filled/
+or
+b) https://icon-sets.iconify.design/pepicons-pop/gear-circle-filled/</details>
+
+
+# 0.0.5 - 12/02/2025
+- Fixed fonts not being applied. Added them to `index.html`.
+- Updated packages `npm update`. [added 3 packages, removed 11 packages, changed 66 packages, and audited 73 packages in 24s]
+- No intentions on upgrading to Tauri 2.0 as a priority.
+
+
+# 0.0.4 - 07/01/2025
+- Remove checkboxes
+    Simplified installation and update verification & notification.
+- Fix integrations logo min width
+- Fix `integrations_listing.tsx` & `integrations_pattern.tsx`
+    Removed checkboxes & 'Verify' buttons are working again.
+- Add temp "Orion Planet" icon.
+
+
+# 0.0.3 - 10/30/2024
+- Add confirmation pop up box "Verification Started".
+    - Maybe change later, for a "confirmation state", with button change.
+- Add packages for `{confirm, message}`, imports in `Cargo.lock`, `Cargo.toml` & `tauri.conf.json`.
+- Add 'rem' patterns to `App.css`.
+    - Change 'pixels' sizes to 'rems'.
+- Add `useState` to `App.tsx`
+    - Add consts `selectedCount`, `setSelectedCount` & `updateSelectedCount`.
+- Rename `settings-container` to `container_settings` in `App.tsx`.
+- Rename `integrations_main` to `container_integrations` in `App.tsx`.
+- Rename `integrationsSelected` to `selectedCount` in `integrations_header.tsx`.
+- Add `IntegrationsListProps` interface & `updateSelectedCount` in `integrations_listing.tsx`.
+- Add `invoke`, `confirm` & `message` imports & `updateSelectedCount` in `integrations_pattern.tsx`.
+- Remove  `isDisabled`, `onEnableAction` & `onDisableAction` from `integrations_pattern.tsx`.
+- Fix `handleCheckboxChange`, `handleVerifyClick` & return class names in `integrations_pattern.tsx`.
+- Remove `Interface` option from list in `settings_sidebar.tsx`.
+
+### Started implementation of repos verification for new version & actuall integration download.
+
 # 0.0.2 - 10/16/2024
 ### App Changes
 - Renamed "extension(s)" files, to "integration(s)".
@@ -5,6 +59,7 @@
 
 ### Notes
 - No actual installation has been added, since i rather implement a verification for each integration that is added, before making it available. But i decided to publish the interface done so far, to show that the project is not abandoned/deprecated.
+
 
 # 0.0.1 - 10/15/2024
 ### App Changes

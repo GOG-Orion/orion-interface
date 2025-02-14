@@ -1,0 +1,5 @@
+[
+    {"name":"Steam", "image":"steam", "download_url":""},
+    {"name":"Epic Games", "image":"epicgames", "download_url":""},
+    {"name":"Ubisoft Connect", "image":"ubisoft", "download_url":""}
+]
