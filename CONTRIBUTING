@@ -2,6 +2,8 @@
 
 ### Take a look at the "Projects" tab, and see whats up in the planner.
 
+### For translations, take a look at `languages.json`!
+
 ### For testing use
 `npm run tauri dev`
 

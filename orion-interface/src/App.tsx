@@ -1,7 +1,5 @@
 import "./App.css";
-import IntegrationsContainerHeader from "./components/integrations_header";
-import IntegrationsList from "./components/integrations_listing";
-import SettingsSidebar from "./components/settings_sidebar";
+import SettingsSidebar from "./components/MenuSidebar";
 
 function App() {
 
@@ -11,14 +9,8 @@ function App() {
       <h1>Orion</h1>
       </div>
       <div>
-        <div className="settings-content">
+        <div> {/* This is the main container for the settings page */}
           <SettingsSidebar />
-          <div className="container_integrations">
-            <div>
-              <IntegrationsContainerHeader />
-              <IntegrationsList />
-            </div>
-          </div>
         </div>
       </div>
     </div>

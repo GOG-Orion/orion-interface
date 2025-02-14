@@ -1,0 +1,13 @@
+[
+    {"lang":"ENG","menu_head":"MENU", "menu_item01":"Integrations", "menu_item02":"Source Code", "menu_item03":"Contributors", "menu_item04":"Configuration", "int_head":"Integrations", "int_search":"Search"},
+    {"lang":"PT-BR","menu_head":"MENU", "menu_item01":"Integrações", "menu_item02":"Código Fonte", "menu_item03":"Contribuidores", "menu_item04":"Configurações", "int_head":"Integrações", "int_search":"Buscar"},
+    {"lang":"ESP","menu_head":"MENÚ","menu_item01":"Integraciones", "menu_item02":"Código Fuente", "menu_item03":"Contribuidores", "menu_item04":"Configuración", "int_head":"", "int_search":""},
+    {"lang":"FRA","menu_head":"MENU","menu_item01":"Intégrations", "menu_item02":"Code Source", "menu_item03":"Contributeurs", "menu_item04":"Configuration", "int_head":"", "int_search":""},
+    {"lang":"DEU","menu_head":"MENÜ","menu_item01":"Integrationen", "menu_item02":"Quellcode", "menu_item03":"Mitwirkende", "menu_item04":"Konfiguration", "int_head":"", "int_search":""},
+    {"lang":"ITA","menu_head":"MENU","menu_item01":"Integrazioni", "menu_item02":"Codice Sorgente", "menu_item03":"Contributori", "menu_item04":"Configurazione", "int_head":"", "int_search":""},
+    {"lang":"RUS","menu_head":"МЕНЮ","menu_item01":"Интеграции", "menu_item02":"Исходный код", "menu_item03":"Участники", "menu_item04":"Конфигурация", "int_head":"", "int_search":""},
+    {"lang":"JPN","menu_head":"メニュー","menu_item01":"統合", "menu_item02":"ソースコード", "menu_item03":"貢献者", "menu_item04":"構成", "int_head":"", "int_search":""},
+    {"lang":"KOR","menu_head":"메뉴","menu_item01":"통합", "menu_item02":"소스 코드", "menu_item03":"기여자", "menu_item04":"구성", "int_head":"", "int_search":""},
+    {"lang":"CHN","menu_head":"菜单","menu_item01":"集成", "menu_item02":"源代码", "menu_item03":"贡献者", "menu_item04":"配置", "int_head":"", "int_search":""},
+    {"lang":"","menu_head":"", "menu_item01":"", "menu_item02":"", "menu_item03":"", "menu_item04":"", "int_head":"", "int_search":""}
+]

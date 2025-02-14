@@ -1,7 +1,27 @@
+# 0.0.6 - 14/02/2025
+- Update `settings_sidebar.tsx` to render component tabs, in a single file, instead of separate component files grouped.
+- Add separate folders for tabs component.
+- Add `LanguageContext` as a better way to propagate languages, than prop drilling. May add libs later for this, but thats not the focus rn.
+- Add Integrations image. Source: https://www.svgrepo.com/svg/436798/link-circle-fill [64px]
+- Add Configuration gear image.* Source: https://icon-sets.iconify.design/mdi/gear/ [48px]
+- Add Source Code github image. Source: https://icon-sets.iconify.design/octicon/mark-github-24/ [48px]
+- Add Contributors group image. Source: https://icon-sets.iconify.design/flowbite/users-group-solid/ [48px]
+- Add `Active` selection forthe menu & selection line to replicacte GOGs' configs menu.
+- Add minimum window size in `tauri.conf.json`. [Next goal, is to make it frameless and add a personalized `title bar`]
+- Priority for next version, is to implement the installation proccess & necessary repos to Orion repo. Also, to clean the css stylesheet.
+
+
+**Considering to change for:*
+<details>
+a) https://icon-sets.iconify.design/pepicons-pencil/gear-circle-filled/
+or
+b) https://icon-sets.iconify.design/pepicons-pop/gear-circle-filled/</details>
+
+
 # 0.0.5 - 12/02/2025
 - Fixed fonts not being applied. Added them to `index.html`.
-- Updated packages `npm update`.
-[added 3 packages, removed 11 packages, changed 66 packages, and audited 73 packages in 24s]
+- Updated packages `npm update`. [added 3 packages, removed 11 packages, changed 66 packages, and audited 73 packages in 24s]
+- No intentions on upgrading to Tauri 2.0 as a priority.
 
 
 # 0.0.4 - 07/01/2025
