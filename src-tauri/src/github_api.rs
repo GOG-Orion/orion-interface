@@ -1,5 +1,6 @@
 use reqwest::blocking::Client;
 use serde::Deserialize;
+use crate::integration_version::save_installed_version;
 
 // Structure to deserialize repository content
 #[derive(Deserialize)]
@@ -49,6 +50,15 @@ pub fn resolve_download_url(integration_name: &str) -> Result<String, String> {
     let release: serde_json::Value = response.json()
         .map_err(|e| format!("Failed to parse GitHub release response: {}", e))?;
 
+    // Extracting the tag_name (version)
+    let tag_name = release.get("tag_name")
+        .and_then(|v| v.as_str())
+        .ok_or_else(|| "No tag_name found in the release response.".to_string())?;
+
+    // Update the control file with the latest version
+    save_installed_version(integration_name, tag_name)?;
+
+    // Fetch the first asset to get the download URL
     let assets = release.get("assets")
         .and_then(|a| a.as_array())
         .ok_or_else(|| "No assets field found in the release response.".to_string())?;

@@ -8,6 +8,7 @@ const CONTROL_FILE: &str = "./integrations_control.json";
 /// Structure to store installed integrations and their versions
 #[derive(Serialize, Deserialize, Default)]
 struct IntegrationControl {
+    // Maps the integration name to the latest version
     integrations: HashMap<String, String>,
 }
 
