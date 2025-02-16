@@ -1,0 +1,29 @@
+name: Check Release Version
+
+on:
+  workflow_dispatch: {}
+
+jobs:
+  check-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Get latest release version
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          REPO="GOG-Orion/galaxy-integration-steam"
+          # Faz a requisição para o endpoint de última release
+          RESPONSE=$(curl -s -H "Authorization: token $GITHUB_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/${REPO}/releases/latest)
+          # Extrai o valor do campo 'tag_name' com jq
+          VERSION=$(echo "$RESPONSE" | jq -r '.tag_name')
+          
+          if [ "$VERSION" = "null" ]; then
+            echo "No release found for ${REPO}."
+          else
+            echo "Latest release version of ${REPO}: ${VERSION}"
+          fi

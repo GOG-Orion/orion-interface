@@ -1,3 +1,7 @@
+- Add `check_release.yaml` Action test to verify latest version from repo. Co-relates to `github_api.src`
+[Manages repo names, download urls & fetching repo contents].
+
+
 # 0.0.6 - 14/02/2025
 - Update `settings_sidebar.tsx` to render component tabs, in a single file, instead of separate component files grouped.
 - Add separate folders for tabs component.
