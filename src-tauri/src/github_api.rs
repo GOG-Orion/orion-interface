@@ -39,7 +39,7 @@ pub fn resolve_download_url(integration_name: &str) -> Result<String, String> {
     let response = request.send()
         .map_err(|e| format!("Failed to fetch GitHub release: {}", e))?;
 
-    let status = response.status(); // Salva antes de `response.json()`
+    let status = response.status(); // Saves before `response.json()`
     
     if !status.is_success() {
         let error_text = response.text().unwrap_or_else(|_| "Unknown error".to_string());
