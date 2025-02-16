@@ -1,4 +1,4 @@
-import languages from './languages.json'; // Adjust the path accordingly
+import languages from './languages.json';
 
 export function getMenuText(language: string) {
     const selectedLanguage = languages.find(lang => lang.lang === language);

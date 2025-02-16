@@ -1,6 +1,6 @@
 [package]
 name = "Orion"
-version = "0.0.6"
+version = "0.1.7"
 description = "A integrations downloader client, for the GOG Galaxy App."
 authors = ["Vitor (v-Kaleb) Guttler"]
 edition = "2021"

@@ -19,6 +19,7 @@ export function MenuSidebar({}: MenuSidebarProps) {
   const {selectedLanguage, menuText, setLanguage} = useLanguage();
   const [selectedTab, setSelectedTab] = useState("menu_item01"); // Default tab
 
+
   return (
     <div className="menu-container">
       {/* Sidebar */}

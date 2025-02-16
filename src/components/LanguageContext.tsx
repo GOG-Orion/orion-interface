@@ -8,17 +8,22 @@ interface LanguageContextType {
   setLanguage: (lang: string) => void;
 }
 
+
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+
 
 export const LanguageProvider = ({ children }: { children: React.ReactNode }) => {
   const [selectedLanguage, setSelectedLanguage] = useState("ENG");
 
+  
   const getMenuText = (lang: string) => {
     return languages.find((l) => l.lang === lang) || languages[0]; 
   };
 
+  
   const [menuText, setMenuText] = useState(getMenuText(selectedLanguage));
 
+  
   const setLanguage = (lang: string) => {
     setSelectedLanguage(lang);
     setMenuText(getMenuText(lang)); 
@@ -30,6 +35,7 @@ export const LanguageProvider = ({ children }: { children: React.ReactNode }) =>
     </LanguageContext.Provider>
   );
 };
+
 
 export const useLanguage = () => {
   const context = useContext(LanguageContext);

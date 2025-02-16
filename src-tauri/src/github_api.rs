@@ -39,8 +39,11 @@ pub fn resolve_download_url(integration_name: &str) -> Result<String, String> {
     let response = request.send()
         .map_err(|e| format!("Failed to fetch GitHub release: {}", e))?;
 
-    if !response.status().is_success() {
-        return Err(format!("GitHub API returned error: {} - {}", response.status(), response.text().unwrap_or_else(|_| "Unknown error".to_string())));
+    let status = response.status(); // Salva antes de `response.json()`
+    
+    if !status.is_success() {
+        let error_text = response.text().unwrap_or_else(|_| "Unknown error".to_string());
+        return Err(format!("GitHub API returned error: {} - {}", status, error_text));
     }
 
     let release: serde_json::Value = response.json()
@@ -71,15 +74,14 @@ pub fn fetch_repo_contents(owner: &str, repo: &str, path: &str) -> Result<Vec<Re
         .send()
         .map_err(|e| format!("Failed to fetch contents: {}", e))?;
 
-    if response.status().is_success() {
+    let status = response.status(); // Save before `response.json()`
+
+    if status.is_success() {
         let contents: Vec<RepoContent> = response.json()
-            .map_err(|e| format!("Failed to parse response (HTTP {}): {}", response.status(), e))?;
+            .map_err(|e| format!("Failed to parse response (HTTP {}): {}", status, e))?;
         Ok(contents)
     } else {
-        Err(format!(
-            "Failed to fetch contents. HTTP Status: {} - Error: {}",
-            response.status(),
-            response.text().unwrap_or_else(|_| "Unknown error".to_string())
-        ))
+        let error_text = response.text().unwrap_or_else(|_| "Unknown error".to_string());
+        Err(format!("Failed to fetch contents. HTTP Status: {} - Error: {}", status, error_text))
     }
 }

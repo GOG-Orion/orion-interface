@@ -1,5 +1,7 @@
+# 0.1.7  - 16/02/2025
 - Add `check_release.yaml` Action test to verify latest version from repo. Co-relates to `github_api.src`
 [Manages repo names, download urls & fetching repo contents].
+- Fix `github_api.src` response.status to save before the response.json(), because it could not be called after it.
 
 
 # 0.0.6 - 14/02/2025

@@ -1,5 +1,5 @@
 import "./App.css";
-import SettingsSidebar from "./components/MenuSidebar";
+import MenuSidebar from "./components/MenuSidebar";
 
 function App() {
 
@@ -10,7 +10,7 @@ function App() {
       </div>
       <div>
         <div> {/* This is the main container for the settings page */}
-          <SettingsSidebar />
+          <MenuSidebar />
         </div>
       </div>
     </div>
