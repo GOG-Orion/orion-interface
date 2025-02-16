@@ -15,10 +15,12 @@ export function IntegrationsContainerPattern({
   downloadUrl,
 }: IntegrationsContainerPatternProps) {
   const [extensionName] = useState(name);
-  // currentVersion can be managed here (default is empty or "0.0.0")
-  const [currentVersion] = useState("");
+  // Assume the installed version is managed internally via a file,
+  // but the latest available version is obtained here (for example, "v1.0.7")
+  const [latestVersion] = useState("v1.0.7");
   const [isVerifying, setIsVerifying] = useState(false);
   const [buttonText, setButtonText] = useState("Verify");
+ 
 
   const handleVerifyClick = async () => {
     const confirmation = await confirm(
@@ -31,8 +33,8 @@ export function IntegrationsContainerPattern({
       try {
         // Call the Tauri command 'verify_latest_version'
         const updateAvailable = await invoke<boolean>("verify_latest_version", {
-          integration_name: extensionName,
-          current_version: currentVersion,
+          integrationName: extensionName,
+          latestVersion: latestVersion,
         });
 
         if (updateAvailable) {
@@ -48,7 +50,7 @@ export function IntegrationsContainerPattern({
         }
       } catch (error) {
         console.error("Verification failed:", error);
-        await message("Verification failed: " + (error as Error).message, {
+        await message("Verification failed: " + String(error), {
           title: "Error",
           type: "error",
         });
