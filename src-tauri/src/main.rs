@@ -9,6 +9,9 @@ use file_manager::download_file;
 use integration_version::verify_latest_version;
 
 fn main() {
+    // Inicializa o logger
+    env_logger::init();
+
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
             download_file,

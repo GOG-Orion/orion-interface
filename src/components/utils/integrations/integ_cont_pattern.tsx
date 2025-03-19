@@ -20,8 +20,12 @@ export function IntegrationsContainerPattern({
   const [latestVersion] = useState("v1.0.7");
   const [isVerifying, setIsVerifying] = useState(false);
   const [buttonText, setButtonText] = useState("Verify");
+  // Estado para saber se há atualização disponível
+  const [updateAvailable, setUpdateAvailable] = useState(false);
+  const [disableButton, setDisableButton] = useState(false);
  
 
+  // Função para verificar a versão
   const handleVerifyClick = async () => {
     const confirmation = await confirm(
       "Do you want to start verification?",
@@ -31,22 +35,27 @@ export function IntegrationsContainerPattern({
       setIsVerifying(true);
       setButtonText("Verifying...");
       try {
-        // Call the Tauri command 'verify_latest_version'
-        const updateAvailable = await invoke<boolean>("verify_latest_version", {
+        const update = await invoke<boolean>("verify_latest_version", {
           integrationName: extensionName,
           latestVersion: latestVersion,
         });
-
-        if (updateAvailable) {
-          setButtonText("Update!");
-          await message("New version available! Click 'Download' to install.", {
+        if (update) {
+          setUpdateAvailable(true);
+          setButtonText("Download & Install");
+          await message("New version available! Click the button to download and install.", {
             title: "Info",
           });
         } else {
+          setUpdateAvailable(false);
           await message("Latest version installed.", {
             title: "Info",
             type: "error",
           });
+          setDisableButton(true);
+          setTimeout(() => {
+            setDisableButton(false);
+          }, 60000);
+          setButtonText("Verify"); // Mantém como Verify, já que não há atualização
         }
       } catch (error) {
         console.error("Verification failed:", error);
@@ -54,15 +63,44 @@ export function IntegrationsContainerPattern({
           title: "Error",
           type: "error",
         });
+        setButtonText("Verify");
       } finally {
         setIsVerifying(false);
-        // Reset button text after verification (or leave "Update!" if you want to allow direct updates)
-        setButtonText("Verify");
       }
     }
   };
 
-  // Build the logo image path using the integrationImage property
+  // Função para download e instalação
+  const handleDownloadAndInstall = async () => {
+    try {
+      const result = await invoke("download_file", {
+        integrationName: extensionName,
+      });
+      console.log(result);
+      await message("Download, installation, and cleanup completed successfully!", {
+        title: "Success",
+      });
+      // Após a instalação, reseta o estado
+      setUpdateAvailable(false);
+      setButtonText("Verify");
+    } catch (error) {
+      console.error("Download and install failed:", error);
+      await message("Download and install failed: " + String(error), {
+        title: "Error",
+        type: "error",
+      });
+    }
+  };
+
+  // Ao clicar, decide qual ação executar com base no estado
+  const handleButtonClick = async () => {
+    if (updateAvailable) {
+      await handleDownloadAndInstall();
+    } else {
+      await handleVerifyClick();
+    }
+  };
+
   const integrationImagePath = `../src/assets/${integrationImage}Logo.svg`;
 
   return (
@@ -76,7 +114,7 @@ export function IntegrationsContainerPattern({
         <span className="integration-item Name">{extensionName}</span>
       </span>
       <span className="integration-item Props">
-        <button onClick={handleVerifyClick} disabled={isVerifying}>
+        <button onClick={handleButtonClick} disabled={isVerifying || disableButton}>
           {buttonText}
         </button>
       </span>
