@@ -1,4 +1,30 @@
-# 0.1.7  - 16/02/2025
+# 0.1.7  - 11/11/2025
+### Build Fixes
+- Fix TypeScript compilation errors (11 errors → 0)
+  - Update `ReactDOM` import for React 18 compatibility (`react-dom/client`)
+  - Remove unused imports in `IntegrationsTab.tsx`, `MenuSidebar.tsx`
+  - Remove unused variables in `integ_cont_header.tsx`, `integ_cont_pattern.tsx`
+- Add placeholder implementations for `ContributorsTab.tsx` and `SourceCodeTab.tsx`
+- Remove reference to non-existent `ConfigurationsTab.tsx`
+- Fix version display in `MenuSidebar.tsx` (0.0.6 → 0.1.7)
+
+### Project Documentation
+- Add `PROJECT_ANALYSIS.md` - Comprehensive project audit including:
+  - Security vulnerability analysis (CodeQL: 0 alerts)
+  - Code quality recommendations (ESLint, Prettier, testing)
+  - Dependency analysis and upgrade paths
+  - Testing strategy (unit/integration/e2e)
+  - CI/CD setup guidelines
+  - Maintenance roadmap (short/medium/long term)
+- Add `VERIFICATION_SUMMARY.md` - Quick reference of changes and next steps
+
+### Build Status
+- ✅ TypeScript compilation: SUCCESSFUL
+- ✅ Vite build: SUCCESSFUL (155 KB → 50 KB gzipped)
+- ✅ CodeQL security scan: 0 alerts
+- ⚠️ npm audit: 2 moderate vulnerabilities (require vite 7 upgrade - breaking change)
+
+### Previous 0.1.7 Changes (16/02/2025)
 - Add `check_release.yaml` Action test to verify latest version from repo. Co-relates to `github_api.src`
 [Manages repo names, download urls & fetching repo contents].
 - Fix `github_api.src` response.status to save before the response.json(), because it could not be called after it.
