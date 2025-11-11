@@ -1,11 +1,10 @@
-import SourceCodeContainer from './SourceCodeContainer';
-
-const SourceCodeTab = () => {
+const ContributorsTab = () => {
   return (
       <div>
-      <></>
+        <h2>Contributors</h2>
+        <p>Contributors information will be displayed here.</p>
       </div>
   );
 };
   
-export default SourceCodeTab;
+export default ContributorsTab;

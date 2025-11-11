@@ -12,7 +12,7 @@ interface IntegrationsContainerPatternProps {
 export function IntegrationsContainerPattern({
   name,
   integrationImage,
-  downloadUrl,
+  // downloadUrl is kept in interface for future use but not currently utilized
 }: IntegrationsContainerPatternProps) {
   const [extensionName] = useState(name);
   // Assume the installed version is managed internally via a file,
