@@ -1,13 +1,7 @@
-import {useState} from 'react';
 import { getMenuText } from '../languages.ts';
 
 export function IntegrationsContainerHeader() {
-    const [selectedLanguage, setSelectedLanguage] = useState("ENG");
-
-    const handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedLanguage(event.target.value);
-    };
-
+    const selectedLanguage = "ENG";
     const menuText = getMenuText(selectedLanguage);
 
     return (
