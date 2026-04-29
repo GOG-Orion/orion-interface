@@ -10,7 +10,6 @@ function IntegrationsContainerList() {
           key={index}
           name={integration.name}
           integrationImage={integration.image}
-          downloadUrl={integration.download_url}
         />
       ))}
     </div>

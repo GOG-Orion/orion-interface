@@ -1,14 +1,7 @@
-import {useState} from 'react';
-import { getMenuText } from '../languages.ts';
+import { useLanguage } from "../../LanguageContext";
 
 export function IntegrationsContainerHeader() {
-    const [selectedLanguage, setSelectedLanguage] = useState("ENG");
-
-    const handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setSelectedLanguage(event.target.value);
-    };
-
-    const menuText = getMenuText(selectedLanguage);
+    const { menuText } = useLanguage();
 
     return (
         <div className="integrations_tab_header">

@@ -10,6 +10,7 @@ import ContributorsTab from './ContributorsTab.tsx';
 import ContributorsImage from './assets/contributors_group.svg';
 import ConfigurationsTab from './ConfigurationsTab.tsx';
 import ConfigurationsImage from './assets/configuration_gear.svg';
+import { ORION_VERSION } from './utils/version';
 
 
 
@@ -100,7 +101,7 @@ export function MenuSidebar({}: MenuSidebarProps) {
         </ul>
         <div className="orion_ver" title="Orion Version">
           <div>
-            <span>0.0.6</span>
+            <span>{ORION_VERSION}</span>
             <span> - Alpha</span>
           </div>
         </div>
@@ -109,20 +110,8 @@ export function MenuSidebar({}: MenuSidebarProps) {
       <div className="tab-content">
         {selectedTab === "menu_item01" && <IntegrationsTab /> }
         {selectedTab === "menu_item02" && <SourceCodeTab /> }
-        {selectedTab === "menu_item03" && (
-          <div>
-            <h2>{menuText.menu_item03}</h2>
-            {/* This renders your item03 */}
-            <p>Details for {menuText.menu_item03} content.</p>
-          </div>
-        )}
-        {selectedTab === "menu_item04" && (
-          <div>
-            <h2>{menuText.menu_item04}</h2>
-            {/* This renders your item04 */}
-            <p>Details for {menuText.menu_item04} content.</p>
-          </div>
-        )}
+        {selectedTab === "menu_item03" && <ContributorsTab /> }
+        {selectedTab === "menu_item04" && <ConfigurationsTab /> }
       </div>
     </div>
   );

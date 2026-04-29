@@ -1,10 +1,10 @@
-import { createContext, useContext, useState } from "react";
-import languages from "./utils/languages.json";
+import { createContext, useContext, useState, type ReactNode } from "react";
+import { getMenuText, type LanguageEntry } from "./utils/languages";
 
 
 interface LanguageContextType {
   selectedLanguage: string;
-  menuText: Record<string, string>;
+  menuText: LanguageEntry;
   setLanguage: (lang: string) => void;
 }
 
@@ -12,21 +12,13 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
 
-export const LanguageProvider = ({ children }: { children: React.ReactNode }) => {
+export const LanguageProvider = ({ children }: { children: ReactNode }) => {
   const [selectedLanguage, setSelectedLanguage] = useState("ENG");
-
-  
-  const getMenuText = (lang: string) => {
-    return languages.find((l) => l.lang === lang) || languages[0]; 
-  };
-
-  
   const [menuText, setMenuText] = useState(getMenuText(selectedLanguage));
 
-  
   const setLanguage = (lang: string) => {
     setSelectedLanguage(lang);
-    setMenuText(getMenuText(lang)); 
+    setMenuText(getMenuText(lang));
   };
 
   return (
