@@ -18,6 +18,8 @@ pub struct ReleaseAsset {
     pub browser_download_url: String,
     #[serde(default)]
     pub content_type: Option<String>,
+    #[serde(default)]
+    pub digest: Option<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
@@ -35,6 +37,7 @@ pub struct ReleaseInfo {
     pub tag_name: String,
     pub asset_name: String,
     pub download_url: String,
+    pub asset_digest: Option<String>,
 }
 
 // Maps integration name to repository name
@@ -57,6 +60,16 @@ fn pick_asset<'a>(release: &'a GitHubRelease) -> Result<&'a ReleaseAsset, String
         })
         .or_else(|| release.assets.first())
         .ok_or_else(|| "No assets found in the release.".to_string())
+}
+
+fn normalize_asset_digest(digest: Option<&str>) -> Option<String> {
+    digest
+        .map(|value| value.trim().to_string())
+        .filter(|value| !value.is_empty())
+}
+
+fn is_sha256_digest(digest: &str) -> bool {
+    digest.to_ascii_lowercase().starts_with("sha256:")
 }
 
 pub fn get_latest_release(integration_name: &str) -> Result<ReleaseInfo, String> {
@@ -102,6 +115,13 @@ pub fn get_latest_release(integration_name: &str) -> Result<ReleaseInfo, String>
         tag_name: release.tag_name,
         asset_name: asset.name.clone(),
         download_url: asset.browser_download_url.clone(),
+        asset_digest: normalize_asset_digest(asset.digest.as_deref()).and_then(|digest| {
+            if is_sha256_digest(&digest) {
+                Some(digest)
+            } else {
+                None
+            }
+        }),
     })
 }
 
@@ -177,11 +197,29 @@ mod tests {
                     name: "plugin.zip".to_string(),
                     browser_download_url: "https://example.com/plugin.zip".to_string(),
                     content_type: Some("application/zip".to_string()),
+                    digest: Some("sha256:abc123".to_string()),
                 },
             ],
         };
 
         let asset = pick_asset(&release).expect("asset should be selected");
         assert_eq!(asset.name, "plugin.zip");
+    }
+
+    #[test]
+    fn keeps_sha256_digest_when_present() {
+        let asset = ReleaseAsset {
+            name: "plugin.zip".to_string(),
+            browser_download_url: "https://example.com/plugin.zip".to_string(),
+            content_type: Some("application/zip".to_string()),
+            digest: Some("sha256:abc123".to_string()),
+        };
+
+        assert_eq!(
+            normalize_asset_digest(asset.digest.as_deref()),
+            Some("sha256:abc123".to_string())
+        );
+        assert!(is_sha256_digest("sha256:abc123"));
+        assert!(!is_sha256_digest("md5:abc123"));
     }
 }

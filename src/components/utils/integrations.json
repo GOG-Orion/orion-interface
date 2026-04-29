@@ -1,5 +1,26 @@
 [
-    {"name":"Steam", "image":"steam"},
-    {"name":"Epic Games", "image":"epicgames"},
-    {"name":"Ubisoft Connect", "image":"ubisoft"}
+  {
+    "name": "Steam",
+    "image": "steam",
+    "repo": "GOG-Orion/galaxy-integration-steam",
+    "latest_tag": "",
+    "latest_download_url": "",
+    "latest_digest": ""
+  },
+  {
+    "name": "Epic Games",
+    "image": "epicgames",
+    "repo": "GOG-Orion/galaxy-integration-epicgames",
+    "latest_tag": "",
+    "latest_download_url": "",
+    "latest_digest": ""
+  },
+  {
+    "name": "Ubisoft Connect",
+    "image": "ubisoft",
+    "repo": "GOG-Orion/galaxy-integration-ubisoft",
+    "latest_tag": "",
+    "latest_download_url": "",
+    "latest_digest": ""
+  }
 ]

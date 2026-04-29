@@ -1,0 +1,1 @@
+feat(orion): enforce closed-client installs and add project docs

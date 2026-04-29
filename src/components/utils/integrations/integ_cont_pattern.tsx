@@ -1,10 +1,16 @@
 // integrations_pattern.tsx
 import { invoke } from "@tauri-apps/api/tauri";
 import { confirm, message } from "@tauri-apps/api/dialog";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import steamIcon from "../../../assets/steamLogo.svg";
-import epicGamesIcon from "../../../assets/epicgamesLogoEnable.svg";
+import epicGamesIcon from "../../../assets/epicgamesLogo.svg";
 import ubisoftIcon from "../../../assets/ubisoftLogo.svg";
+
+type InstallReadiness = {
+  client_running: boolean;
+  client_names: string[];
+  message: string;
+};
 
 interface IntegrationsContainerPatternProps {
   name: string;
@@ -17,16 +23,37 @@ export function IntegrationsContainerPattern({
 }: IntegrationsContainerPatternProps) {
   const extensionName = name;
   const [updateAvailable, setUpdateAvailable] = useState(false);
+  const [installReadiness, setInstallReadiness] = useState<InstallReadiness>({
+    client_running: false,
+    client_names: [],
+    message: "Checking install readiness...",
+  });
   const [isVerifying, setIsVerifying] = useState(false);
   const [isInstalling, setIsInstalling] = useState(false);
   const [statusText, setStatusText] = useState("Ready");
 
   const integrationIcons: Record<string, string> = {
     steam: steamIcon,
-    "epic games": epicGamesIcon,
-    "ubisoft connect": ubisoftIcon,
+    epicgames: epicGamesIcon,
+    ubisoft: ubisoftIcon,
   };
- 
+
+  const refreshInstallReadiness = async () => {
+    const readiness = await invoke<InstallReadiness>("get_install_readiness");
+    setInstallReadiness(readiness);
+    return readiness;
+  };
+
+  useEffect(() => {
+    void refreshInstallReadiness().catch((error) => {
+      console.error("Failed to check install readiness:", error);
+      setInstallReadiness({
+        client_running: true,
+        client_names: [],
+        message: `Failed to check install readiness: ${String(error)}`,
+      });
+    });
+  }, []);
 
   const handleVerifyClick = async () => {
     const confirmation = await confirm(
@@ -76,6 +103,15 @@ export function IntegrationsContainerPattern({
   };
 
   const handleInstallClick = async () => {
+    const readiness = await refreshInstallReadiness();
+    if (readiness.client_running) {
+      setStatusText(readiness.message);
+      await message(readiness.message, {
+        title: "Info",
+      });
+      return;
+    }
+
     setIsInstalling(true);
     setStatusText("Installing...");
     try {
@@ -100,7 +136,8 @@ export function IntegrationsContainerPattern({
     }
   };
 
-  const integrationImagePath = integrationIcons[integrationImage.toLowerCase()] || steamIcon;
+  const integrationImagePath =
+    integrationIcons[integrationImage.toLowerCase()] || steamIcon;
 
   return (
     <div className="integration-item">
@@ -116,11 +153,21 @@ export function IntegrationsContainerPattern({
         <button onClick={handleVerifyClick} disabled={isVerifying || isInstalling}>
           {isVerifying ? "Verifying..." : "Verify"}
         </button>
-        <button onClick={handleInstallClick} disabled={isInstalling || isVerifying || !updateAvailable}>
+        <button
+          onClick={handleInstallClick}
+          disabled={isInstalling || isVerifying || !updateAvailable || installReadiness.client_running}
+          title={
+            installReadiness.client_running
+              ? installReadiness.message
+              : "Install the selected integration"
+          }
+        >
           {isInstalling ? "Installing..." : "Install"}
         </button>
       </span>
-      <span className="integration-item Status">{statusText}</span>
+      <span className="integration-item Status">
+        {installReadiness.client_running ? installReadiness.message : statusText}
+      </span>
     </div>
   );
 }

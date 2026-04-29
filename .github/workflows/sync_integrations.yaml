@@ -1,0 +1,90 @@
+name: Sync Integrations Metadata
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: "17 3 * * 1"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync-metadata:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Refresh integration metadata
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import pathlib
+          import urllib.request
+
+          path = pathlib.Path("src/components/utils/integrations.json")
+          integrations = json.loads(path.read_text(encoding="utf-8"))
+          headers = {"User-Agent": "Orion-Sync-Workflow", "Accept": "application/vnd.github+json"}
+          token = os.environ.get("GITHUB_TOKEN")
+          if token:
+              headers["Authorization"] = f"Bearer {token}"
+
+          changed = False
+          for entry in integrations:
+              repo = entry.get("repo")
+              if not repo:
+                  continue
+
+              request = urllib.request.Request(
+                  f"https://api.github.com/repos/{repo}/releases/latest",
+                  headers=headers,
+              )
+              with urllib.request.urlopen(request) as response:
+                  release = json.load(response)
+
+              assets = release.get("assets", [])
+              asset = next(
+                  (candidate for candidate in assets if candidate.get("name", "").endswith(".zip")),
+                  assets[0] if assets else None,
+              )
+              digest = ""
+              download_url = ""
+              latest_tag = release.get("tag_name", "")
+
+              if asset:
+                  download_url = asset.get("browser_download_url", "")
+                  digest = asset.get("digest") or ""
+
+              updates = {
+                  "latest_tag": latest_tag,
+                  "latest_download_url": download_url,
+                  "latest_digest": digest,
+              }
+
+              for key, value in updates.items():
+                  if entry.get(key) != value:
+                      entry[key] = value
+                      changed = True
+
+          if changed:
+              path.write_text(json.dumps(integrations, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+          PY
+
+      - name: Create pull request
+        if: ${{ success() }}
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "chore(sync): refresh integration metadata"
+          branch: sync/integration-metadata
+          title: "chore: refresh integration metadata"
+          body: |
+            Automated sync of release metadata for Orion integration entries.
+
+            - Refresh latest release tags
+            - Refresh latest download URLs
+            - Refresh release digests when available

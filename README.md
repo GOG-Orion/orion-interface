@@ -1,27 +1,44 @@
 # Orion Interface
 
-Orion Interface is a lightweight Tauri desktop app for browsing, verifying, and installing GOG Galaxy 2.0 community integrations.
+Orion Interface is a Tauri desktop app for browsing, verifying, and installing GOG Galaxy 2.0 community integrations.
 
-## Features
+## What it does
 
-- Browse available integrations
-- Check the installed version against the latest GitHub release
-- Install releases into a configurable local install root
-- Switch between translated UI strings
-- View source, contributors, and configuration tabs
+- Lists available integrations
+- Checks installed releases against the latest GitHub release
+- Installs only when the GOG client is closed
+- Validates archive integrity before copying files into the install root
+- Supports translated UI strings and configuration overrides
+
+## Requirements
+
+- Node.js and `pnpm`
+- Rust toolchain
+- The normal Tauri platform dependencies for your OS
 
 ## Development
 
 ```bash
 pnpm install
-pnpm run typecheck
-pnpm run test
-pnpm run build
-pnpm run tauri dev
+pnpm typecheck
+pnpm build
+cargo test
+pnpm tauri dev
 ```
 
-## Notes
+## Install behavior
 
-- The frontend version is derived from `package.json`.
-- The install root can be configured from the UI.
-- Linux Tauri builds still require the usual GTK/WebKit system libraries.
+- The app auto-discovers likely GOG Galaxy plugin paths when possible.
+- A manual install-root override can be set from the UI or environment.
+- Installation is blocked while the GOG client is running because the client can overwrite freshly installed files.
+
+## Safety rules
+
+- Archive payloads with scripts, executables, or symlinks are rejected.
+- SHA-256 digests are verified when release metadata provides them.
+
+## Project docs
+
+- [Docs index](docs/README.md)
+- [Contributing](CONTRIBUTING.md)
+- [Code of Conduct](CODE_OF_CONDUCT.md)

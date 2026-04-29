@@ -23,6 +23,116 @@ fn config_path_override() -> Option<PathBuf> {
     env::var_os("ORION_CONFIG_FILE").map(PathBuf::from)
 }
 
+fn install_root_override() -> Option<PathBuf> {
+    env::var_os("ORION_INSTALL_ROOT").map(PathBuf::from)
+}
+
+fn home_dir() -> Option<PathBuf> {
+    env::var_os("HOME")
+        .map(PathBuf::from)
+        .or_else(|| env::var_os("USERPROFILE").map(PathBuf::from))
+}
+
+fn install_root_candidates() -> Vec<PathBuf> {
+    let mut candidates = Vec::new();
+
+    if cfg!(target_os = "windows") {
+        if let Some(local_app_data) = env::var_os("LOCALAPPDATA").map(PathBuf::from) {
+            candidates.push(
+                local_app_data
+                    .join("GOG.com")
+                    .join("Galaxy")
+                    .join("Plugins")
+                    .join("Installed"),
+            );
+        }
+
+        if let Some(app_data) = env::var_os("APPDATA").map(PathBuf::from) {
+            candidates.push(
+                app_data
+                    .join("GOG.com")
+                    .join("Galaxy")
+                    .join("Plugins")
+                    .join("Installed"),
+            );
+        }
+
+        if let Some(program_files) = env::var_os("ProgramFiles").map(PathBuf::from) {
+            candidates.push(
+                program_files
+                    .join("GOG Galaxy")
+                    .join("Plugins")
+                    .join("Installed"),
+            );
+        }
+
+        if let Some(program_files_x86) = env::var_os("ProgramFiles(x86)").map(PathBuf::from) {
+            candidates.push(
+                program_files_x86
+                    .join("GOG Galaxy")
+                    .join("Plugins")
+                    .join("Installed"),
+            );
+        }
+    } else if cfg!(target_os = "macos") {
+        if let Some(home) = home_dir() {
+            candidates.push(
+                home.join("Library")
+                    .join("Application Support")
+                    .join("GOG.com")
+                    .join("Galaxy")
+                    .join("Plugins")
+                    .join("Installed"),
+            );
+        }
+    } else if let Some(home) = home_dir() {
+        if let Some(xdg_data_home) = env::var_os("XDG_DATA_HOME").map(PathBuf::from) {
+            candidates.push(
+                xdg_data_home
+                    .join("GOG.com")
+                    .join("Galaxy")
+                    .join("Plugins")
+                    .join("Installed"),
+            );
+        }
+
+        candidates.push(
+            PathBuf::from("/opt")
+                .join("GOG Galaxy")
+                .join("Plugins")
+                .join("Installed"),
+        );
+
+        candidates.push(
+            home.join(".local")
+                .join("share")
+                .join("GOG.com")
+                .join("Galaxy")
+                .join("Plugins")
+                .join("Installed"),
+        );
+    }
+
+    candidates
+}
+
+fn discover_install_root_from_candidates(candidates: Vec<PathBuf>) -> Option<PathBuf> {
+    let first_candidate = candidates.first().cloned();
+
+    candidates
+        .into_iter()
+        .find(|candidate| candidate.exists())
+        .or(first_candidate)
+}
+
+fn discover_install_root() -> Option<PathBuf> {
+    if let Some(path) = install_root_override() {
+        return Some(path);
+    }
+
+    discover_install_root_from_candidates(install_root_candidates())
+}
+
 pub fn config_file_path() -> PathBuf {
     if let Some(path) = config_path_override() {
         return path;
@@ -38,6 +148,10 @@ pub fn config_file_path() -> PathBuf {
 }
 
 pub fn default_install_root() -> PathBuf {
+    if let Some(mut base_dir) = discover_install_root() {
+        return base_dir;
+    }
+
     if let Some(mut base_dir) = tauri::api::path::app_data_dir() {
         base_dir.push(CONFIG_DIR_NAME);
         base_dir.push("plugins");
@@ -134,5 +248,41 @@ mod tests {
         let _ = fs::remove_file(&config_file);
         let _ = fs::remove_dir_all(&install_root);
         env::remove_var("ORION_CONFIG_FILE");
+    }
+
+    #[test]
+    fn discovers_first_existing_install_root_candidate() {
+        let root = unique_path("discover");
+        let first = root
+            .join("first")
+            .join("GOG.com")
+            .join("Galaxy")
+            .join("Plugins")
+            .join("Installed");
+        let second = root
+            .join("second")
+            .join("GOG.com")
+            .join("Galaxy")
+            .join("Plugins")
+            .join("Installed");
+
+        fs::create_dir_all(&second).expect("candidate should be creatable");
+
+        let discovered = discover_install_root_from_candidates(vec![first.clone(), second.clone()]);
+
+        assert_eq!(discovered, Some(second));
+
+        let _ = fs::remove_dir_all(&root);
+    }
+
+    #[test]
+    fn honors_explicit_install_root_override() {
+        let override_root = unique_path("override");
+        env::set_var("ORION_INSTALL_ROOT", &override_root);
+
+        let resolved = discover_install_root();
+        assert_eq!(resolved, Some(override_root.clone()));
+
+        env::remove_var("ORION_INSTALL_ROOT");
     }
 }
